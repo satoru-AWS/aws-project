@@ -3,6 +3,7 @@ setup: true
 # 次に実行する設定ファイルを決めるためのファイルという意味
 
 orbs:
+  python: circleci/python@3.0.0
   path-filtering: circleci/path-filtering@1.0.0
 # どのフォルダが更新されたかを判定する
 
