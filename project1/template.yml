@@ -1,0 +1,102 @@
+AWSTemplateFormatVersion: 2010-09-09
+Description: Secure Static Website with S3 and CloudFront
+
+# ------------------------------------------------------- #
+# Palameters
+# ------------------------------------------------------- #
+Parameters:
+  ProjectName:
+    Description: Name of project
+    Type: String
+    Default: aws-project1-cfn
+
+# ------------------------------------------------------- #
+# Resources
+# ------------------------------------------------------- #
+Resources:
+# S3バケット
+  S3Bucket:
+    Type: AWS::S3::Bucket
+    Properties:
+      BucketName: !Sub "${ProjectName}-bucket"
+      PublicAccessBlockConfiguration:
+        BlockPublicAcls: true
+        BlockPublicPolicy: true
+        IgnorePublicAcls: true
+        RestrictPublicBuckets: true
+      WebsiteConfiguration:
+        IndexDocument: index.html
+      Tags:
+        - Key: string
+          Value: !Sub "${ProjectName}-bucket"
+
+# Origin Access Control
+  OAC:
+    Type: AWS::CloudFront::OriginAccessControl
+    Properties:
+      OriginAccessControlConfig:
+        Description: OAC for S3 Static Website
+        Name: !Sub "${ProjectName}-oac"
+        OriginAccessControlOriginType: s3
+        SigningBehavior: always
+          # cloudfrontが署名するリクエストの指定
+          # alwaysにすることでS3にリクエストを送る際に毎回正規の署名を付与する
+        SigningProtocol: sigv4
+          # cloudfrontがリクエストに署名する認証プロトコル
+          # ハッシュ化して改ざんを防ぐ
+
+# CloudFrontディストリビューション
+  CloudFrontDistribution:
+    Type: AWS::CloudFront::Distribution
+    Properties:
+      DistributionConfig:
+        Enabled: true
+        DefaultRootObject: index.html
+        Origins:
+          - DomainName: !GetAtt S3Bucket.RegionalDomainName
+            Id: S3Origin
+            S3OriginConfig:
+              OriginAccessIdentity: ""
+            OriginAccessControlId: !Ref OAC
+        DefaultCacheBehavior:
+          TargetOriginId: S3Origin
+          ViewerProtocolPolicy: redirect-to-https
+          AllowedMethods:
+            - GET
+            - HEAD
+          CachedMethods:
+            - GET
+            - HEAD
+          ForwardedValues:
+            QueryString: false
+            Cookies:
+              Forward: none
+
+# S3バケットポリシー
+  S3BucketPolicy:
+    Type: AWS::S3::BucketPolicy
+    Properties:
+      Bucket: !Ref S3Bucket
+      PolicyDocument:
+        Statement:
+          - Sid: AllowCloudFrontServicePrincipalReadOnly
+            Effect: Allow
+            Principal:
+              Service: cloudfront.amazonaws.com
+            Action: s3:GetObject
+            Resource: !Sub "arn:aws:s3:::${S3Bucket}/*"
+            Condition:
+              ArnLike:
+                AWS:SourceArn: !Sub  "arn:aws:cloudfront::${AWS::AccountId}:distribution/${CloudFrontDistribution}"
+
+# ------------------------------------------------------- #
+# Outputs
+# ------------------------------------------------------- #
+
+Outputs:
+  BuketName:
+    Description: Name of S3 bucket
+    Value: !Ref S3Bucket
+  CloudFrontURL:
+    Description: URL of CloudFront distribution
+    Value: !GetAtt CloudFrontDistribution.DomainName
