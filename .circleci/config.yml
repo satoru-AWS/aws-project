@@ -15,7 +15,7 @@ workflows:
           base-revision: main
 # 差分の対象をmainブランチにしている
           mapping: |
-            project1/.* .circleci/project1.yml run-project1 true
+            project1/.* .circleci/project1.yml run-project1=true
 # 動かすファイルの指定 [検知するパス/呼び出す設定ファイル/渡すパラメータ名/値]
           config-path: .circleci/project1.yml
 # フォルダに変更がない場合、エラー時に呼びで読み込むファイル
