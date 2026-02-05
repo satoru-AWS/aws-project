@@ -13,9 +13,8 @@ jobs:
   # 構文チェック機能
   cfn-lint:
     working_directory: ~/project/project1
-    executer:
-      name: python/default
-      tag: "3.11"
+    docker:
+      - image: cimg/python3.11
     steps:
       - checkout
       - run: 
