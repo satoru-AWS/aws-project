@@ -1,0 +1,20 @@
+version: 2.1
+setup: true
+# 次に実行する設定ファイルを決めるためのファイルという意味
+
+orbs:
+  path-filtering: circleci/path-filtering@1.0.0
+# どのフォルダが更新されたかを判定する
+
+workflows:
+  generate-config:
+    jobs:
+      - path-filtering/filter:
+# ファイルの差分チェック
+          base-revision: main
+# 差分の対象をmainブランチにしている
+          mapping: |
+            project1/.* .circleci/project1.yml run-project1 true
+# 動かすファイルの指定 [検知するパス/呼び出す設定ファイル/渡すパラメータ名/値]
+          config-path: .circleci/project1.yml
+# フォルダに変更がない場合、エラー時に呼びで読み込むファイル
