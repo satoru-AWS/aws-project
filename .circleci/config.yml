@@ -4,7 +4,7 @@ setup: true
 
 orbs:
   python: circleci/python@3.0.0
-  path-filtering: circleci/path-filtering@1.0.0
+  path-filtering: circleci/path-filtering@1.1.0
 # どのフォルダが更新されたかを判定する
 
 workflows:
