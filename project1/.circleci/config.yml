@@ -63,7 +63,6 @@ jobs:
 
 workflows:
   build-and-deploy:
-    when: << pipeline.parameters.run-project1 >>
     jobs:
       - cfn-lint
       - deploy-infrastructure:
