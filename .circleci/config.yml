@@ -50,7 +50,12 @@ jobs:
               --output text)
 
             # BUCKET_NAMEという変数を使ってS3へ同期
-            aws s3 sync ./ s3://${BUCKET_NAME}/ --delete
+            aws s3 sync ./ s3://${BUCKET_NAME}/ \
+               --delete \
+               --exclude ".git/*" \
+               --exclude ".circleci/*" \
+               --exclude "template.yml" \
+               --exclude "README.md"
       - run:
           name: CloudFront Cache Invalidation
           command: |
@@ -59,7 +64,7 @@ jobs:
               --stack-name project1-stack \
               --query "Stacks[0].Outputs[?OutputKey=='CloudFrontDistributionId'].OutputValue" \
               --output text)
-            aws cloudfront create-invalidation --distribution-id ${DIST_ID}
+            aws cloudfront create-invalidation --distribution-id ${DIST_ID} --paths "/*"
 
 workflows:
   build-and-deploy:
