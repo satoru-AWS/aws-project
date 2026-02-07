@@ -50,7 +50,7 @@ jobs:
               --output text)
 
             # BUCKET_NAMEという変数を使ってS3へ同期
-            aws s3 sync ./dist s3://${BUCKET_NAME}/ --delete
+            aws s3 sync ./ s3://${BUCKET_NAME}/ --delete
       - run:
           name: CloudFront Cache Invalidation
           command: |
