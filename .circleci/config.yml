@@ -57,7 +57,7 @@ jobs:
             # キャッシュクリア
             DIST_ID=$(aws cloudformation describe-stacks \
               --stack-name project1-stack \
-              --query "Stacks[0].Outputs[?OutputKey=='CloudFormationDistributionId'].OutputValue" \
+              --query "Stacks[0].Outputs[?OutputKey=='CloudFrontDistributionId'].OutputValue" \
               --output text)
             aws cloudfront create-invalidation --distribution-id ${DIST_ID}
 
