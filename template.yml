@@ -94,7 +94,7 @@ Resources:
 # ------------------------------------------------------- #
 
 Outputs:
-  BuketName:
+  BucketName:
     Description: Name of S3 bucket
     Value: !Ref S3Bucket
   CloudFrontURL:
