@@ -3,52 +3,127 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AWS Portfolio Project 1</title>
+    <title>サトルのAWS学習記録</title>
     <style>
+        :root {
+            --aws-orange: #FF9900;
+            --aws-navy: #232F3E;
+            --bg-color: #f4f7f6;
+        }
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
+            font-family: 'Helvetica Neue', Arial, sans-serif;
+            line-height: 1.6;
             margin: 0;
-            background: linear-gradient(135deg, #232f3e 0%, #0073bb 100%);
+            padding: 0;
+            background-color: var(--bg-color);
+            color: #333;
+        }
+        header {
+            background-color: var(--aws-navy);
             color: white;
+            padding: 2rem 1rem;
             text-align: center;
+            border-bottom: 5px solid var(--aws-orange);
         }
         .container {
-            background: rgba(255, 255, 255, 0.1);
-            padding: 3rem;
-            border-radius: 15px;
-            backdrop-filter: blur(10px);
-            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
-            border: 1px solid rgba(255, 255, 255, 0.18);
+            max-width: 900px;
+            margin: 2rem auto;
+            padding: 0 1rem;
         }
-        h1 {
-            font-size: 2.5rem;
-            margin-bottom: 1rem;
+        .card {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            margin-bottom: 2rem;
         }
-        p {
-            font-size: 1.2rem;
-            opacity: 0.9;
+        h2 {
+            color: var(--aws-navy);
+            border-left: 5px solid var(--aws-orange);
+            padding-left: 10px;
+            margin-bottom: 1.5rem;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 1rem;
+        }
+        th, td {
+            text-align: left;
+            padding: 12px;
+            border-bottom: 1px solid #ddd;
+        }
+        th {
+            background-color: #f8f9fa;
         }
         .status {
-            display: inline-block;
-            margin-top: 2rem;
-            padding: 0.5rem 1.5rem;
-            background-color: #00ca8e;
-            border-radius: 20px;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 0.85rem;
             font-weight: bold;
+        }
+        .done { background-color: #c3e6cb; color: #155724; }
+        .doing { background-color: #ffeeba; color: #856404; }
+        
+        footer {
+            text-align: center;
+            padding: 2rem;
+            color: #777;
             font-size: 0.9rem;
         }
     </style>
 </head>
 <body>
-    <div class="container">
-        <h1>AWS Portfolio Project 1</h1>
-        <p>S3 + CloudFront (OAC) + CircleCI</p>
-        <div class="status">Successfully Hosted!</div>
-        <p style="margin-top: 20px; font-size: 0.8rem;">Created by Your Name</p>
-    </div>
+
+<header>
+    <h1>☁️ サトルのAWS学習記録</h1>
+    <p>Cloud Practitioner / Solutions Architect を目指して</p>
+</header>
+
+<div class="container">
+    <section class="card">
+        <h2>現在の学習状況</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>項目</th>
+                    <th>日付</th>
+                    <th>ステータス</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>IAM / セキュリティの基本</td>
+                    <td>2026-02-10</td>
+                    <td><span class="status done">完了</span></td>
+                </tr>
+                <tr>
+                    <td>EC2インスタンスの立ち上げ</td>
+                    <td>2026-02-14</td>
+                    <td><span class="status doing">進行中</span></td>
+                </tr>
+                <tr>
+                    <td>VPCネットワーク構築</td>
+                    <td>---</td>
+                    <td><span class="status">未着手</span></td>
+                </tr>
+            </tbody>
+        </table>
+    </section>
+
+    <section class="card">
+        <h2>今日学んだこと (2026-02-14)</h2>
+        <ul>
+            <li><strong>EC2:</strong> インスタンスタイプ（t3.microなど）の選択基準を理解した。</li>
+            <li><strong>Key Pairs:</strong> SSH接続のための秘密鍵の重要性と管理について。</li>
+            <li><strong>Security Groups:</strong> インバウンドルールの設定（ポート22, 80など）。</li>
+        </ul>
+    </section>
+</div>
+
+<footer>
+    &copy; 2026 Satoru's AWS Journey
+</footer>
+
 </body>
 </html>
