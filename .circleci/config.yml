@@ -56,7 +56,7 @@ jobs:
                --exclude ".circleci/*" \
                --exclude "template.yml" \
                --exclude "README.md" \
-               --exclude "other/*"
+               --exclude "Vercel.md"
       - run:
           name: CloudFront Cache Invalidation
           command: |
